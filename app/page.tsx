@@ -2,7 +2,7 @@
 
 import { Button, FileInput, Group, Loader, rem, Stack } from "@mantine/core";
 import { useEffect, useState } from "react";
-import { MakePlace, Tally } from "../lib/types";
+import { Tally } from "../lib/types";
 import { tallyItems } from "../lib/itemTally";
 import { IconFileSmile } from "@tabler/icons-react";
 import Help from "../components/help";
