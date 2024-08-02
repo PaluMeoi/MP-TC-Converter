@@ -51,9 +51,15 @@ export interface InteriorFurniture {
   properties: FurnitureProperties;
 }
 
+export interface Material {
+  name: string;
+  itemId: number;
+}
+
 export interface FurnitureProperties {
   color?: string;
   castShadow?: boolean;
+  material?: Material;
 }
 
 export interface Properties {}

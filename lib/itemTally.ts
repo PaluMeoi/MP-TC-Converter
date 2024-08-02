@@ -22,6 +22,14 @@ export function tallyItems(mpData: MakePlace) {
           const dye = getDye(item.properties.color);
           tally[dye] = tally[dye] + 1 || 1;
         }
+        if (
+          "properties" in item &&
+          "material" in item.properties &&
+          item.properties.material !== undefined
+        ) {
+          tally[item.properties.material.itemId] =
+            tally[item.properties.material.itemId] + 1 || 1;
+        }
         // if ("color" in item && item.color !== "" && item.color !== undefined) {
         //   const dye = getDye(item.color);
         //   tally[dye] = tally[dye] + 1 || 1;
