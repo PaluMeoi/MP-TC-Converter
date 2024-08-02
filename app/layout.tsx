@@ -14,7 +14,7 @@ import { theme } from "../theme";
 
 export const metadata = {
   title: "MP2TC",
-  description: "Convert a MakePlace to a Teamcraft list",
+  description: "Convert a MakePlace file to a Teamcraft list",
 };
 
 const righteous = Righteous({ weight: "400", subsets: ["latin"] });
