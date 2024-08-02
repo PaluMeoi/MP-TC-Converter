@@ -22,10 +22,10 @@ export function tallyItems(mpData: MakePlace) {
           const dye = getDye(item.properties.color);
           tally[dye] = tally[dye] + 1 || 1;
         }
-        if ("color" in item && item.color !== "" && item.color !== undefined) {
-          const dye = getDye(item.color);
-          tally[dye] = tally[dye] + 1 || 1;
-        }
+        // if ("color" in item && item.color !== "" && item.color !== undefined) {
+        //   const dye = getDye(item.color);
+        //   tally[dye] = tally[dye] + 1 || 1;
+        // }
       }
     });
   });
