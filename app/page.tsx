@@ -1,23 +1,14 @@
 "use client";
 
-import {
-  Box,
-  Button,
-  FileInput,
-  Group,
-  Loader,
-  rem,
-  Stack,
-  Text,
-} from "@mantine/core";
+import { Button, FileInput, Group, Loader, rem, Stack } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { MakePlace, Tally } from "../lib/types";
 import { tallyItems } from "../lib/itemTally";
 import { IconFileSmile } from "@tabler/icons-react";
+import Help from "../components/help";
 
 export default function HomePage() {
   const [file, setFile] = useState<File | null>(null);
-  const [mpData, setMpData] = useState<MakePlace | undefined>(undefined);
   const [tcUrl, setTcUrl] = useState<string | undefined>(undefined);
   const [error, setError] = useState<string | undefined>(undefined);
   const [loading, setLoading] = useState(false);
@@ -29,14 +20,12 @@ export default function HomePage() {
         try {
           const text = await file?.text();
           const mpData = JSON.parse(text!);
-          setMpData(mpData);
           const tally = tallyItems(mpData);
           setTcUrl(convertToTC(tally));
           setError(undefined);
           setLoading(false);
         } catch (e) {
           setError("Could not parse file");
-          setMpData(undefined);
           setTcUrl(undefined);
           setLoading(false);
         }
@@ -44,7 +33,6 @@ export default function HomePage() {
 
       loadConvert();
     } else {
-      setMpData(undefined);
       setTcUrl(undefined);
       setError(undefined);
     }
@@ -95,15 +83,8 @@ export default function HomePage() {
           )}
         />
       </Group>
-      <Stack gap="0" justify="center" align="center" pt="5%">
-        <Text span>
-          Simply load the JSON file from MakePlace and it will be converted to a
-          Teamcraft list import link.
-        </Text>
-        <Text span>
-          Because of how MakePlace works, dyes may not be accurate and should be
-          double checked.
-        </Text>
+      <Stack justify="center" align="center" pt="xl">
+        <Help />
       </Stack>
     </Stack>
   );
