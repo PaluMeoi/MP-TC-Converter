@@ -8,7 +8,9 @@ import {
   rem,
   Stack,
   Tooltip,
+  Text,
   useMantineTheme,
+  Center,
 } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { Tally } from "../lib/types";
@@ -17,8 +19,18 @@ import {
   IconAlertTriangle,
   IconFileCheck,
   IconFileSmile,
+  IconFileUpload,
+  IconUpload,
+  IconX,
 } from "@tabler/icons-react";
 import Help from "../components/help";
+import {
+  DropzoneAccept,
+  DropzoneFullScreen,
+  DropzoneIdle,
+  DropzoneReject,
+  FileWithPath,
+} from "@mantine/dropzone";
 
 export default function HomePage() {
   const [file, setFile] = useState<File | null>(null);
@@ -96,34 +108,79 @@ export default function HomePage() {
     );
 
   return (
-    <Stack justify="center" align="center">
-      <Group justify="center">
-        <FileInput
-          label="MakePlace File"
-          clearable
-          value={file}
-          onChange={loadFile}
-          accept="application/json"
-          error={error}
-          leftSection={loading ? <Loader size={18} /> : icon}
-          placeholder="Select File"
-          inputContainer={(children) => (
-            <Group align="flex-start">
-              <Stack style={{ width: 250 }}>{children}</Stack>
-              {tcUrl == undefined || file === null ? (
-                <Button disabled>Open in Teamcraft</Button>
-              ) : (
-                <Button component="a" href={tcUrl}>
-                  Open in Teamcraft
-                </Button>
-              )}
-            </Group>
-          )}
-        />
-      </Group>
-      <Stack justify="center" align="center" pt="xl">
-        <Help />
+    <>
+      <DropzoneFullScreen
+        onDrop={(files) => loadFile(files[0])}
+        accept={["application/json"]}
+        style={{ pointerEvents: "none" }}
+      >
+        <Group justify="center" gap="xl" pt="xl">
+          <DropzoneAccept>
+            <IconFileUpload
+              style={{
+                width: rem(52),
+                height: rem(52),
+                color: "var(--mantine-color-blue-6)",
+              }}
+              stroke={1.5}
+            />
+          </DropzoneAccept>
+          <DropzoneReject>
+            <IconX
+              style={{
+                width: rem(52),
+                height: rem(52),
+                color: "var(--mantine-color-red-6)",
+              }}
+              stroke={1.5}
+            />
+          </DropzoneReject>
+          <DropzoneIdle>
+            <IconFileSmile
+              style={{
+                width: rem(52),
+                height: rem(52),
+                color: "var(--mantine-color-dimmed)",
+              }}
+              stroke={1.5}
+            />
+          </DropzoneIdle>
+          <div>
+            <Text size="xl" inline>
+              Drag and drop MakePlace JSON files here to load
+            </Text>
+          </div>
+        </Group>
+      </DropzoneFullScreen>
+      <Stack justify="center" align="center">
+        <Group justify="center">
+          <FileInput
+            label="MakePlace File"
+            clearable
+            value={file}
+            onChange={loadFile}
+            accept="application/json"
+            error={error}
+            leftSection={loading ? <Loader size={18} /> : icon}
+            placeholder="Select File"
+            inputContainer={(children) => (
+              <Group align="flex-start">
+                <Stack style={{ width: 250 }}>{children}</Stack>
+                {tcUrl == undefined || file === null ? (
+                  <Button disabled>Open in Teamcraft</Button>
+                ) : (
+                  <Button component="a" href={tcUrl}>
+                    Open in Teamcraft
+                  </Button>
+                )}
+              </Group>
+            )}
+          />
+        </Group>
+        <Stack justify="center" align="center" pt="xl">
+          <Help />
+        </Stack>
       </Stack>
-    </Stack>
+    </>
   );
 }
