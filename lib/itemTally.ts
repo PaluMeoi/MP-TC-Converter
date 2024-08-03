@@ -1,8 +1,12 @@
 import { Category, MakePlace, Tally } from "./types";
-import { convertColor, getDye } from "./color";
+import { getDye } from "./color";
 
-export function tallyItems(mpData: MakePlace) {
+export function tallyItems(mpData: MakePlace): {
+  tally: Tally;
+  unExactDyes: number;
+} {
   const tally: Tally = Object();
+  let unExactDyes = 0;
 
   const categories: Category[] = [
     "interiorFurniture",
@@ -19,8 +23,11 @@ export function tallyItems(mpData: MakePlace) {
           item.properties.color !== "" &&
           item.properties.color !== undefined
         ) {
-          const dye = getDye(item.properties.color);
+          const { dye, exact } = getDye(item.properties.color);
           tally[dye] = tally[dye] + 1 || 1;
+          if (!exact) {
+            unExactDyes += 1;
+          }
         }
         if (
           "properties" in item &&
@@ -30,13 +37,9 @@ export function tallyItems(mpData: MakePlace) {
           tally[item.properties.material.itemId] =
             tally[item.properties.material.itemId] + 1 || 1;
         }
-        // if ("color" in item && item.color !== "" && item.color !== undefined) {
-        //   const dye = getDye(item.color);
-        //   tally[dye] = tally[dye] + 1 || 1;
-        // }
       }
     });
   });
 
-  return tally;
+  return { tally: tally, unExactDyes: unExactDyes };
 }

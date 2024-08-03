@@ -1,10 +1,19 @@
 "use client";
 
-import { Button, FileInput, Group, Loader, rem, Stack } from "@mantine/core";
+import {
+  Button,
+  FileInput,
+  Group,
+  Loader,
+  rem,
+  Stack,
+  Tooltip,
+  useMantineTheme,
+} from "@mantine/core";
 import { useEffect, useState } from "react";
 import { Tally } from "../lib/types";
 import { tallyItems } from "../lib/itemTally";
-import { IconFileSmile } from "@tabler/icons-react";
+import { IconAlertTriangle, IconFileSmile } from "@tabler/icons-react";
 import Help from "../components/help";
 
 export default function HomePage() {
@@ -12,6 +21,8 @@ export default function HomePage() {
   const [tcUrl, setTcUrl] = useState<string | undefined>(undefined);
   const [error, setError] = useState<string | undefined>(undefined);
   const [loading, setLoading] = useState(false);
+  const [dyeErrors, setDyeErrors] = useState<number>(0);
+  const theme = useMantineTheme();
 
   useEffect(() => {
     if (file !== null) {
@@ -20,7 +31,8 @@ export default function HomePage() {
         try {
           const text = await file?.text();
           const mpData = JSON.parse(text!);
-          const tally = tallyItems(mpData);
+          const { tally, unExactDyes } = tallyItems(mpData);
+          setDyeErrors(unExactDyes);
           setTcUrl(convertToTC(tally));
           setError(undefined);
           setLoading(false);
@@ -28,13 +40,14 @@ export default function HomePage() {
           setError("Could not parse file");
           setTcUrl(undefined);
           setLoading(false);
+          setDyeErrors(0);
         }
       };
-
       loadConvert();
     } else {
       setTcUrl(undefined);
       setError(undefined);
+      setDyeErrors(0);
     }
   }, [file]);
 
@@ -55,7 +68,21 @@ export default function HomePage() {
     )}`;
   }
 
-  const icon = <IconFileSmile style={{ width: rem(18), height: rem(18) }} />;
+  const icon =
+    dyeErrors === 0 ? (
+      <IconFileSmile style={{ width: rem(18), height: rem(18) }} />
+    ) : (
+      <Tooltip
+        multiline
+        w={200}
+        label={`${dyeErrors} dye${dyeErrors === 1 ? "" : "s"} could not be matched to an exact color`}
+      >
+        <IconAlertTriangle
+          style={{ width: rem(18), height: rem(18) }}
+          color={theme.colors.red[6]}
+        />
+      </Tooltip>
+    );
 
   return (
     <Stack justify="center" align="center">

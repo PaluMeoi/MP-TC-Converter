@@ -14,7 +14,7 @@ export const convertColor = (color: string): MpColor => {
   };
 };
 
-export const getDye = (color: string): number => {
+export const getDye = (color: string): { dye: number; exact: boolean } => {
   const mpColor = convertColor(color);
   let candidate = { id: 0, distance: 99999 };
 
@@ -25,11 +25,11 @@ export const getDye = (color: string): number => {
         (dye.blue - mpColor.blue) ** 2,
     );
     if (distance === 0) {
-      return dye.itemId;
+      return { dye: dye.itemId, exact: true };
     }
     if (distance < candidate.distance) {
       candidate = { id: dye.itemId, distance };
     }
   }
-  return candidate.id;
+  return { dye: candidate.id, exact: false };
 };
