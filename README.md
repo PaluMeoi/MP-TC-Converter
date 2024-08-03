@@ -1,5 +1,6 @@
-# Mantine Next Template
+# MakePlace to Teamcraft List Converter
 
-Get started with the template by clicking `Use this template` button on the top of the page.
+This is a tool for converting MakePlace JSON files to Teamcraft lists in the browser.
 
-[Documentation](https://mantine.dev/guides/next/)
+This works best when used with newer versions of MakePlace, older versions handled dyes differently and may not identify them correctly.
+If your dyes are wrong, try opening the MakePlace file in the latest version of the MakePlace itch.io program and saving it again.
