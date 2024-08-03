@@ -8,9 +8,7 @@ import {
   rem,
   Stack,
   Tooltip,
-  Text,
   useMantineTheme,
-  Center,
 } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { Tally } from "../lib/types";
@@ -19,18 +17,9 @@ import {
   IconAlertTriangle,
   IconFileCheck,
   IconFileSmile,
-  IconFileUpload,
-  IconUpload,
-  IconX,
 } from "@tabler/icons-react";
 import Help from "../components/help";
-import {
-  DropzoneAccept,
-  DropzoneFullScreen,
-  DropzoneIdle,
-  DropzoneReject,
-  FileWithPath,
-} from "@mantine/dropzone";
+import MpDropzone from "../components/MpDropzone";
 
 export default function HomePage() {
   const [file, setFile] = useState<File | null>(null);
@@ -109,49 +98,7 @@ export default function HomePage() {
 
   return (
     <>
-      <DropzoneFullScreen
-        onDrop={(files) => loadFile(files[0])}
-        accept={["application/json"]}
-        style={{ pointerEvents: "none" }}
-      >
-        <Group justify="center" gap="xl" pt="xl">
-          <DropzoneAccept>
-            <IconFileUpload
-              style={{
-                width: rem(52),
-                height: rem(52),
-                color: "var(--mantine-color-blue-6)",
-              }}
-              stroke={1.5}
-            />
-          </DropzoneAccept>
-          <DropzoneReject>
-            <IconX
-              style={{
-                width: rem(52),
-                height: rem(52),
-                color: "var(--mantine-color-red-6)",
-              }}
-              stroke={1.5}
-            />
-          </DropzoneReject>
-          <DropzoneIdle>
-            <IconFileSmile
-              style={{
-                width: rem(52),
-                height: rem(52),
-                color: "var(--mantine-color-dimmed)",
-              }}
-              stroke={1.5}
-            />
-          </DropzoneIdle>
-          <div>
-            <Text size="xl" inline>
-              Drag and drop MakePlace JSON files here to load
-            </Text>
-          </div>
-        </Group>
-      </DropzoneFullScreen>
+      <MpDropzone onDrop={(files) => loadFile(files[0])} />
       <Stack justify="center" align="center">
         <Group justify="center">
           <FileInput
