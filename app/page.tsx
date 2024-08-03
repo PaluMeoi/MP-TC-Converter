@@ -13,7 +13,11 @@ import {
 import { useEffect, useState } from "react";
 import { Tally } from "../lib/types";
 import { tallyItems } from "../lib/itemTally";
-import { IconAlertTriangle, IconFileSmile } from "@tabler/icons-react";
+import {
+  IconAlertTriangle,
+  IconFileCheck,
+  IconFileSmile,
+} from "@tabler/icons-react";
 import Help from "../components/help";
 
 export default function HomePage() {
@@ -70,7 +74,14 @@ export default function HomePage() {
 
   const icon =
     dyeErrors === 0 ? (
-      <IconFileSmile style={{ width: rem(18), height: rem(18) }} />
+      tcUrl === undefined ? (
+        <IconFileSmile style={{ width: rem(18), height: rem(18) }} />
+      ) : (
+        <IconFileCheck
+          style={{ width: rem(18), height: rem(18) }}
+          color={theme.colors.green[7]}
+        />
+      )
     ) : (
       <Tooltip
         multiline
