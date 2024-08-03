@@ -13,7 +13,7 @@ const helpContent = [
     emoji: "🎨",
     question: "Why are my dyes wrong?",
     answer:
-      "MakePlace doesn’t actually save the dye that’s used, but a color value. To find a dye the tool finds the closest dye to that value and while rare (and usually with older designs), it’s possible that it gets it wrong sometimes. ",
+      "MakePlace doesn’t actually save the dye that’s used, but a color value. To find a dye the tool finds the closest dye to that value and while rare (and usually with older designs), it’s possible that it gets it wrong. Opening the layout in MakePlace and saving it again may resolve the issue.",
   },
   {
     emoji: "💾",
