@@ -8,7 +8,6 @@ import {
   rem,
   Stack,
   Tooltip,
-  useMantineTheme,
 } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { Tally } from "../lib/types";
@@ -27,7 +26,6 @@ export default function HomePage() {
   const [error, setError] = useState<string | undefined>(undefined);
   const [loading, setLoading] = useState(false);
   const [dyeErrors, setDyeErrors] = useState<number>(0);
-  const theme = useMantineTheme();
 
   useEffect(() => {
     if (file !== null) {
@@ -80,7 +78,7 @@ export default function HomePage() {
       ) : (
         <IconFileCheck
           style={{ width: rem(18), height: rem(18) }}
-          color={theme.colors.green[7]}
+          color={"var(--mantine-color-green-7)"}
         />
       )
     ) : (
@@ -91,7 +89,7 @@ export default function HomePage() {
       >
         <IconAlertTriangle
           style={{ width: rem(18), height: rem(18) }}
-          color={theme.colors.red[6]}
+          color={"var(--mantine-color-red-6)"}
         />
       </Tooltip>
     );
